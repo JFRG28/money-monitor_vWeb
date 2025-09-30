@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Tabla principal de gastos (basada en unificado_v4)
+model Gasto {
+  id           Int      @id @default(autoincrement())
+  concepto     String
+  monto        Decimal  @db.Decimal(10, 2)
+  tipo_gasto   TipoGasto
+  forma_pago   String
+  mes          String
+  anio         Int
+  fecha_cargo  DateTime
+  fecha_pago   DateTime
+  categoria    Categoria
+  a_pagos      Boolean  @default(false)
+  no_mens      Int      @default(0)
+  total_meses  Int      @default(0)
+  tag          String   @default("NA")
+  se_divide    Boolean  @default(false)
+  gasto_x_mes  String   @default("NA")
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  @@map("gastos")
+}
+
+// Tabla de balance de cuentas (basada en hoja balance)
+model Balance {
+  id        Int      @id @default(autoincrement())
+  tipo      String   // D = Debe, C = Crédito
+  concepto  String
+  monto     Decimal  @db.Decimal(10, 2)
+  deben_ser Decimal  @db.Decimal(10, 2) @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("balance")
+}
+
+// Tabla de deudas (basada en hoja deuda)
+model Deuda {
+  id        Int      @id @default(autoincrement())
+  tipo      String   // T = Tarjeta, O = Otro
+  item      String
+  monto     Decimal  @db.Decimal(10, 2)
+  fecha     DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("deudas")
+}
+
+// Tabla de tipos de gasto (catálogo)
+model TipoGastoItem {
+  id          String @id
+  nombre      String @unique
+  descripcion String?
+
+  @@map("tipos_gasto")
+}
+
+// Tabla de formas de pago (catálogo)
+model FormaPagoItem {
+  id          String @id
+  nombre      String @unique
+  descripcion String?
+
+  @@map("formas_pago")
+}
+
+// Tabla de categorías (catálogo)
+model CategoriaItem {
+  id          String @id
+  codigo      String @unique
+  descripcion String
+
+  @@map("categorias")
+}
+
+// Enums
+enum TipoGasto {
+  MSI
+  Variable
+  Fijo
+}
+
+enum Categoria {
+  E // Egreso
+  I // Ingreso
+}
