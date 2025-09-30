@@ -15,13 +15,13 @@ model Gasto {
   id           Int      @id @default(autoincrement())
   concepto     String
   monto        Decimal  @db.Decimal(10, 2)
-  tipo_gasto   TipoGasto
+  tipo_gasto   String
   forma_pago   String
   mes          String
   anio         Int
-  fecha_cargo  DateTime
-  fecha_pago   DateTime
-  categoria    Categoria
+  fecha_cargo  DateTime @db.Date
+  fecha_pago   DateTime @db.Date
+  categoria    String
   a_pagos      Boolean  @default(false)
   no_mens      Int      @default(0)
   total_meses  Int      @default(0)
@@ -53,7 +53,7 @@ model Deuda {
   tipo      String   // T = Tarjeta, O = Otro
   item      String
   monto     Decimal  @db.Decimal(10, 2)
-  fecha     DateTime
+  fecha     DateTime @db.Date
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -87,14 +87,4 @@ model CategoriaItem {
   @@map("categorias")
 }
 
-// Enums
-enum TipoGasto {
-  MSI
-  Variable
-  Fijo
-}
-
-enum Categoria {
-  E // Egreso
-  I // Ingreso
-}
+// Enums eliminados - ahora se usan String directamente

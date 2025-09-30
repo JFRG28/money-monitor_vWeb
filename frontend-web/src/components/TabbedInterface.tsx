@@ -110,7 +110,7 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
           fecha_pago: new Date(gasto.fecha_pago).toLocaleDateString(),
           a_pagos: gasto.a_pagos ? 'Sí' : 'No',
           se_divide: gasto.se_divide ? 'Sí' : 'No',
-          categoria: gasto.categoria === 'E' ? 'Egreso' : 'Ingreso'
+          categoria: gasto.categoria === 'E' ? 'Egreso' : gasto.categoria === 'I' ? 'Ingreso' : gasto.categoria
         }));
       
       case 'balance':
@@ -147,7 +147,7 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
           .map(gasto => ({
             ...gasto,
             monto: `$${gasto.monto.toLocaleString()}`,
-            categoria: gasto.categoria === 'E' ? 'Egreso' : 'Ingreso'
+            categoria: gasto.categoria === 'E' ? 'Egreso' : gasto.categoria === 'I' ? 'Ingreso' : gasto.categoria
           }));
       
       default:
@@ -172,7 +172,7 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       {/* Menú de pestañas */}
       <TabMenu 
         tabs={tabs} 

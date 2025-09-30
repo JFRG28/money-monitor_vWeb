@@ -3,13 +3,13 @@ export interface Gasto {
   id: number;
   concepto: string;
   monto: number;
-  tipo_gasto: 'MSI' | 'Variable' | 'Fijo';
+  tipo_gasto: string;
   forma_pago: string;
   mes: string;
   anio: number;
   fecha_cargo: Date;
   fecha_pago: Date;
-  categoria: 'E' | 'I';
+  categoria: string;
   a_pagos: boolean;
   no_mens: number;
   total_meses: number;
@@ -23,13 +23,13 @@ export interface Gasto {
 export interface GastoCreateInput {
   concepto: string;
   monto: number;
-  tipo_gasto: 'MSI' | 'Variable' | 'Fijo';
+  tipo_gasto: string;
   forma_pago: string;
   mes: string;
   anio: number;
   fecha_cargo: Date;
   fecha_pago: Date;
-  categoria: 'E' | 'I';
+  categoria: string;
   a_pagos: boolean;
   no_mens: number;
   total_meses: number;

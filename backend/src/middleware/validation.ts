@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
-import { TIPOS_GASTO, CATEGORIAS } from '../constants';
+import { TIPOS_GASTO, CATEGORIAS, FORMAS_PAGO, MESES } from '../constants/catalogs';
 
 // Esquema de validación para crear/actualizar gastos
 const gastoSchema = Joi.object({
@@ -14,18 +14,19 @@ const gastoSchema = Joi.object({
     'any.required': 'El monto es requerido'
   }),
   tipo_gasto: Joi.string().valid(...TIPOS_GASTO).required().messages({
+    'string.empty': 'El tipo de gasto es requerido',
     'any.only': `El tipo de gasto debe ser uno de: ${TIPOS_GASTO.join(', ')}`,
     'any.required': 'El tipo de gasto es requerido'
   }),
-  forma_pago: Joi.string().min(1).max(100).required().messages({
+  forma_pago: Joi.string().valid(...FORMAS_PAGO).required().messages({
     'string.empty': 'La forma de pago es requerida',
-    'string.min': 'La forma de pago debe tener al menos 1 carácter',
-    'string.max': 'La forma de pago no puede tener más de 100 caracteres'
+    'any.only': `La forma de pago debe ser una de: ${FORMAS_PAGO.join(', ')}`,
+    'any.required': 'La forma de pago es requerida'
   }),
-  mes: Joi.string().min(1).max(20).required().messages({
+  mes: Joi.string().valid(...MESES).required().messages({
     'string.empty': 'El mes es requerido',
-    'string.min': 'El mes debe tener al menos 1 carácter',
-    'string.max': 'El mes no puede tener más de 20 caracteres'
+    'any.only': `El mes debe ser uno de: ${MESES.join(', ')}`,
+    'any.required': 'El mes es requerido'
   }),
   anio: Joi.number().integer().min(2000).max(2100).required().messages({
     'number.integer': 'El año debe ser un número entero',
@@ -42,6 +43,7 @@ const gastoSchema = Joi.object({
     'any.required': 'La fecha de pago es requerida'
   }),
   categoria: Joi.string().valid(...CATEGORIAS).required().messages({
+    'string.empty': 'La categoría es requerida',
     'any.only': `La categoría debe ser una de: ${CATEGORIAS.join(', ')}`,
     'any.required': 'La categoría es requerida'
   }),

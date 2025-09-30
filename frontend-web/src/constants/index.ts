@@ -1,10 +1,5 @@
-// Constantes locales
-export const TIPOS_GASTO = ['MSI', 'Variable', 'Fijo'] as const;
-export const CATEGORIAS = ['E', 'I'] as const;
-export const MESES = [
-  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-] as const;
+// Re-exportar catálogos desde el archivo dedicado
+export * from './catalogs';
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
