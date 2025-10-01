@@ -65,3 +65,18 @@ Mes = Literal[
     'Noviembre',
     'Diciembre'
 ]
+
+# Tags
+TAGS = [
+    'D',   # Debo
+    'MD',  # Me deben
+    'NA'   # No aplica
+]
+Tag = Literal['D', 'MD', 'NA']
+
+# Descripciones de tags (para mostrar en UI)
+TAG_LABELS = {
+    'D': 'Debo',
+    'MD': 'Me deben',
+    'NA': 'No aplica'
+}

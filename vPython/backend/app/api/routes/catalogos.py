@@ -2,7 +2,7 @@
 Rutas de Catálogos
 """
 from fastapi import APIRouter
-from app.core.constants import TIPOS_GASTO, CATEGORIAS, FORMAS_PAGO, MESES
+from app.core.constants import TIPOS_GASTO, CATEGORIAS, FORMAS_PAGO, MESES, TAGS, TAG_LABELS
 
 router = APIRouter(prefix="/catalogos", tags=["catalogos"])
 
@@ -16,7 +16,9 @@ def get_catalogos():
             "tipos_gasto": TIPOS_GASTO,
             "categorias": CATEGORIAS,
             "formas_pago": FORMAS_PAGO,
-            "meses": MESES
+            "meses": MESES,
+            "tags": TAGS,
+            "tag_labels": TAG_LABELS
         }
     }
 
@@ -43,3 +45,9 @@ def get_formas_pago():
 def get_meses():
     """Obtener catálogo de meses"""
     return {"success": True, "data": MESES}
+
+
+@router.get("/tags", response_model=dict)
+def get_tags():
+    """Obtener catálogo de tags"""
+    return {"success": True, "data": TAGS, "labels": TAG_LABELS}

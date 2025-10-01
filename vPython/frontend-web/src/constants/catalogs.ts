@@ -32,11 +32,25 @@ export const MESES = [
   'Diciembre'
 ] as const;
 
+export const TAGS = [
+  'D',   // Debo
+  'MD',  // Me deben
+  'NA'   // No aplica
+] as const;
+
+// Descripciones de tags (para mostrar en UI)
+export const TAG_LABELS: Record<string, string> = {
+  'D': 'Debo',
+  'MD': 'Me deben',
+  'NA': 'No aplica'
+};
+
 // Types derivados de las constantes
 export type TipoGasto = typeof TIPOS_GASTO[number];
 export type Categoria = typeof CATEGORIAS[number];
 export type FormaPago = typeof FORMAS_PAGO[number];
 export type Mes = typeof MESES[number];
+export type Tag = typeof TAGS[number];
 
 // Helpers para validación
 export const isTipoGastoValido = (tipo: string): tipo is TipoGasto => {
