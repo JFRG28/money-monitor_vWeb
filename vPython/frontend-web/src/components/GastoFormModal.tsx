@@ -321,37 +321,41 @@ const GastoFormModal: React.FC<GastoFormModalProps> = ({ isOpen, onClose, onSucc
               </label>
             </div>
 
-            {/* No. Mensualidades */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                No. Mensualidades
-              </label>
-              <input
-                type="number"
-                name="no_mens"
-                value={formData.no_mens}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                placeholder="0"
-                min="0"
-              />
-            </div>
+            {/* No. Mensualidades - Solo visible si "A Pagos" está activo */}
+            {formData.a_pagos && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  No. Mensualidades
+                </label>
+                <input
+                  type="number"
+                  name="no_mens"
+                  value={formData.no_mens}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                  placeholder="0"
+                  min="0"
+                />
+              </div>
+            )}
 
-            {/* Total Meses */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Total Meses
-              </label>
-              <input
-                type="number"
-                name="total_meses"
-                value={formData.total_meses}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                placeholder="0"
-                min="0"
-              />
-            </div>
+            {/* Total Meses - Solo visible si "A Pagos" está activo */}
+            {formData.a_pagos && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Total Meses
+                </label>
+                <input
+                  type="number"
+                  name="total_meses"
+                  value={formData.total_meses}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                  placeholder="0"
+                  min="0"
+                />
+              </div>
+            )}
 
             {/* Gasto por Mes */}
             <div className="md:col-span-2">
