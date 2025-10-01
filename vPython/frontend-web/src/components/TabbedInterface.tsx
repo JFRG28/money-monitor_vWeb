@@ -33,7 +33,7 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
   }, [activeTab, loadGastos, loadBalance, loadDeudas, loadDashboard]);
 
   const tabs = [
-    { id: 'unificado_v4', label: 'Dashboard' },
+    { id: 'unificado_v4', label: 'Registros históricos' },
     { id: 'cálculos', label: 'cálculos' },
     { id: 'app_wallet_x_tdc', label: 'app wallet x TDC' },
     { id: 'balance', label: 'balance' },
