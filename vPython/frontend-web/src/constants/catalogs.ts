@@ -45,12 +45,30 @@ export const TAG_LABELS: Record<string, string> = {
   'NA': 'No aplica'
 };
 
+// Gasto por mes (abreviaciones)
+export const GASTO_X_MES = [
+  'ENE',
+  'FEB',
+  'MAR',
+  'ABR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AGO',
+  'SEP',
+  'OCT',
+  'NOV',
+  'DIC',
+  'NA'
+] as const;
+
 // Types derivados de las constantes
 export type TipoGasto = typeof TIPOS_GASTO[number];
 export type Categoria = typeof CATEGORIAS[number];
 export type FormaPago = typeof FORMAS_PAGO[number];
 export type Mes = typeof MESES[number];
 export type Tag = typeof TAGS[number];
+export type GastoXMes = typeof GASTO_X_MES[number];
 
 // Helpers para validación
 export const isTipoGastoValido = (tipo: string): tipo is TipoGasto => {

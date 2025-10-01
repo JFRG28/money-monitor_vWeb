@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { XMarkIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useApp } from '../contexts/AppContext';
-import { TIPOS_GASTO, CATEGORIAS, MESES, FORMAS_PAGO, TAGS, TAG_LABELS } from '../constants/catalogs';
+import { TIPOS_GASTO, CATEGORIAS, MESES, FORMAS_PAGO, TAGS, TAG_LABELS, GASTO_X_MES } from '../constants/catalogs';
 
 interface GastoFormModalProps {
   isOpen: boolean;
@@ -362,14 +362,16 @@ const GastoFormModal: React.FC<GastoFormModalProps> = ({ isOpen, onClose, onSucc
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Gasto por Mes
               </label>
-              <input
-                type="text"
+              <select
                 name="gasto_x_mes"
                 value={formData.gasto_x_mes}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Descripción del gasto mensual"
-              />
+              >
+                {GASTO_X_MES.map(mes => (
+                  <option key={mes} value={mes}>{mes}</option>
+                ))}
+              </select>
             </div>
           </div>
 

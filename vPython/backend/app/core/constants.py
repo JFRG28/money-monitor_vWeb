@@ -80,3 +80,21 @@ TAG_LABELS = {
     'MD': 'Me deben',
     'NA': 'No aplica'
 }
+
+# Gasto por mes (abreviaciones)
+GASTO_X_MES = [
+    'ENE',
+    'FEB',
+    'MAR',
+    'ABR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AGO',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DIC',
+    'NA'
+]
+GastoXMes = Literal['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC', 'NA']
