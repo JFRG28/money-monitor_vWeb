@@ -11,7 +11,7 @@ from app.api.controllers import gastos as controller
 router = APIRouter(prefix="/gastos", tags=["gastos"])
 
 
-@router.get("/", response_model=dict)
+@router.get("/")
 def get_gastos(
     tipo_gasto: Optional[List[str]] = Query(None),
     categoria: Optional[List[str]] = Query(None),
@@ -46,9 +46,12 @@ def get_gastos(
         limit=limit
     )
     
+    # Convertir Models a Schemas
+    gastos_response = [GastoResponse.model_validate(gasto) for gasto in gastos]
+    
     return {
         "success": True,
-        "data": gastos,
+        "data": gastos_response,
         "pagination": {
             "page": page,
             "limit": limit,
@@ -58,14 +61,15 @@ def get_gastos(
     }
 
 
-@router.get("/msi-mci", response_model=dict)
+@router.get("/msi-mci")
 def get_gastos_msi_mci(db: Session = Depends(get_db)):
     """Obtener gastos MSI/MCI"""
     gastos = controller.get_gastos_msi_mci(db)
-    return {"success": True, "data": gastos}
+    gastos_response = [GastoResponse.model_validate(gasto) for gasto in gastos]
+    return {"success": True, "data": gastos_response}
 
 
-@router.get("/{gasto_id}", response_model=dict)
+@router.get("/{gasto_id}")
 def get_gasto(gasto_id: int, db: Session = Depends(get_db)):
     """Obtener gasto por ID"""
     gasto = controller.get_gasto_by_id(db, gasto_id)
@@ -74,17 +78,19 @@ def get_gasto(gasto_id: int, db: Session = Depends(get_db)):
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Gasto con ID {gasto_id} no encontrado"
         )
-    return {"success": True, "data": gasto}
+    gasto_response = GastoResponse.model_validate(gasto)
+    return {"success": True, "data": gasto_response}
 
 
-@router.post("/", response_model=dict, status_code=status.HTTP_201_CREATED)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create_gasto(gasto: GastoCreate, db: Session = Depends(get_db)):
     """Crear nuevo gasto"""
     new_gasto = controller.create_gasto(db, gasto)
-    return {"success": True, "data": new_gasto, "message": "Gasto creado exitosamente"}
+    gasto_response = GastoResponse.model_validate(new_gasto)
+    return {"success": True, "data": gasto_response, "message": "Gasto creado exitosamente"}
 
 
-@router.put("/{gasto_id}", response_model=dict)
+@router.put("/{gasto_id}")
 def update_gasto(gasto_id: int, gasto: GastoUpdate, db: Session = Depends(get_db)):
     """Actualizar gasto"""
     updated_gasto = controller.update_gasto(db, gasto_id, gasto)
@@ -93,10 +99,11 @@ def update_gasto(gasto_id: int, gasto: GastoUpdate, db: Session = Depends(get_db
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Gasto con ID {gasto_id} no encontrado"
         )
-    return {"success": True, "data": updated_gasto, "message": "Gasto actualizado exitosamente"}
+    gasto_response = GastoResponse.model_validate(updated_gasto)
+    return {"success": True, "data": gasto_response, "message": "Gasto actualizado exitosamente"}
 
 
-@router.delete("/{gasto_id}", response_model=dict)
+@router.delete("/{gasto_id}")
 def delete_gasto(gasto_id: int, db: Session = Depends(get_db)):
     """Eliminar gasto"""
     deleted = controller.delete_gasto(db, gasto_id)
