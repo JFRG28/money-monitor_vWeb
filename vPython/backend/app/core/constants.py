@@ -14,20 +14,26 @@ Categoria = Literal['E', 'I']
 
 # Formas de pago
 FORMAS_PAGO = [
+    'BBVA Oro',
+    'Klar Platino',
+    'Mercado Pago',
+    'Santander Free',
+    'No aplica',
     'Efectivo',
-    'Tarjeta Débito',
-    'Tarjeta Crédito',
     'Transferencia',
-    'PayPal',
-    'Otro'
+    'TDD NU',
+    'TDC NU'
 ]
 FormaPago = Literal[
+    'BBVA Oro',
+    'Klar Platino',
+    'Mercado Pago',
+    'Santander Free',
+    'No aplica',
     'Efectivo',
-    'Tarjeta Débito',
-    'Tarjeta Crédito',
     'Transferencia',
-    'PayPal',
-    'Otro'
+    'TDD NU',
+    'TDC NU'
 ]
 
 # Meses

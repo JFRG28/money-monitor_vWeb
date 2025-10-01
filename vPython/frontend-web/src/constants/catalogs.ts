@@ -6,12 +6,15 @@
 export const TIPOS_GASTO = ['Fijo', 'Variable', 'MSI', 'MCI'] as const;
 export const CATEGORIAS = ['E', 'I'] as const; // Egreso, Ingreso
 export const FORMAS_PAGO = [
+  'BBVA Oro',
+  'Klar Platino',
+  'Mercado Pago',
+  'Santander Free',
+  'No aplica',
   'Efectivo',
-  'Tarjeta Débito',
-  'Tarjeta Crédito',
   'Transferencia',
-  'PayPal',
-  'Otro'
+  'TDD NU',
+  'TDC NU'
 ] as const;
 
 export const MESES = [
