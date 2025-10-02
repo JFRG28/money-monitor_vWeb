@@ -140,6 +140,7 @@ type AppAction =
   | { type: 'ADD_GASTO'; payload: Gasto }
   | { type: 'UPDATE_GASTO'; payload: Gasto }
   | { type: 'DELETE_GASTO'; payload: number }
+  | { type: 'DELETE_BALANCE'; payload: number }
   | { type: 'SET_BALANCE'; payload: BalanceItem[] }
   | { type: 'SET_DEUDAS'; payload: DeudaItem[] }
   | { type: 'SET_DASHBOARD'; payload: DashboardData }
@@ -170,6 +171,11 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return {
         ...state,
         gastos: state.gastos.filter(gasto => gasto.id !== action.payload)
+      };
+    case 'DELETE_BALANCE':
+      return {
+        ...state,
+        balance: state.balance.filter(balance => balance.id !== action.payload)
       };
     case 'SET_BALANCE':
       return { ...state, balance: action.payload };
@@ -212,6 +218,7 @@ interface AppContextType {
   createGasto: (gasto: any) => Promise<void>;
   updateGasto: (id: number, gasto: any) => Promise<void>;
   deleteGasto: (id: number) => Promise<void>;
+  deleteBalance: (id: number) => Promise<void>;
   setFilters: (filters: GastoFilters) => void;
   applyFilters: (filters: GastoFilters) => Promise<void>;
   clearError: () => void;
@@ -408,6 +415,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
+  const deleteBalance = async (id: number) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+      const response = await apiService.deleteBalanceItem(id);
+      
+      if (response.success) {
+        dispatch({ type: 'DELETE_BALANCE', payload: id });
+        await loadDashboard(); // Actualizar dashboard
+      } else {
+        dispatch({ type: 'SET_ERROR', payload: 'Error al eliminar balance' });
+      }
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: 'Error al eliminar balance' });
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
+  };
+
   const setFilters = (filters: GastoFilters) => {
     dispatch({ type: 'SET_FILTERS', payload: filters });
   };
@@ -461,6 +486,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     createGasto,
     updateGasto,
     deleteGasto,
+    deleteBalance,
     setFilters,
     applyFilters,
     clearError

@@ -8,7 +8,7 @@ interface TabbedInterfaceProps {
 }
 
 const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unificado_v4' }) => {
-  const { state, loadGastos, loadBalance, loadDeudas, loadDashboard, deleteGasto } = useApp();
+  const { state, loadGastos, loadBalance, loadDeudas, loadDashboard, deleteGasto, deleteBalance } = useApp();
   const [activeTab, setActiveTab] = useState(initialTab);
 
   // Cargar datos cuando cambie la pestaña activa
@@ -198,6 +198,28 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
     }
   };
 
+  // Funciones de eliminación para balance
+  const handleDeleteBalances = async (ids: number[]) => {
+    try {
+      // Eliminar uno por uno (en el futuro se puede optimizar con un endpoint batch)
+      for (const id of ids) {
+        await deleteBalance(id);
+      }
+    } catch (error) {
+      console.error('Error deleting balances:', error);
+      throw error;
+    }
+  };
+
+  const handleDeleteSingleBalance = async (id: number) => {
+    try {
+      await deleteBalance(id);
+    } catch (error) {
+      console.error('Error deleting balance:', error);
+      throw error;
+    }
+  };
+
   return (
     <div>
       {/* Menú de pestañas */}
@@ -221,8 +243,8 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
             data={getData(activeTab)}
             loading={getLoadingState(activeTab)}
             emptyMessage={`No hay datos disponibles para ${tabs.find(tab => tab.id === activeTab)?.label}`}
-            onDelete={activeTab === 'unificado_v4' ? handleDeleteGastos : undefined}
-            onDeleteSingle={activeTab === 'unificado_v4' ? handleDeleteSingleGasto : undefined}
+            onDelete={activeTab === 'unificado_v4' ? handleDeleteGastos : activeTab === 'balance' ? handleDeleteBalances : undefined}
+            onDeleteSingle={activeTab === 'unificado_v4' ? handleDeleteSingleGasto : activeTab === 'balance' ? handleDeleteSingleBalance : undefined}
             idKey="id"
           />
         </div>
