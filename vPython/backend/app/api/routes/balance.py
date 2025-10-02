@@ -14,7 +14,11 @@ router = APIRouter(prefix="/balance", tags=["balance"])
 def get_balance(db: Session = Depends(get_db)):
     """Obtener todos los balances"""
     balances = controller.get_all_balance(db)
-    balances_response = [BalanceResponse.model_validate(balance) for balance in balances]
+    balances_response = []
+    for balance in balances:
+        balance_dict = balance.__dict__.copy()
+        balance_dict['tipo'] = controller.convert_tipo_to_long(balance.tipo)
+        balances_response.append(BalanceResponse.model_validate(balance_dict))
     return {"success": True, "data": balances_response}
 
 
@@ -27,7 +31,9 @@ def get_balance_by_id(balance_id: int, db: Session = Depends(get_db)):
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Balance con ID {balance_id} no encontrado"
         )
-    balance_response = BalanceResponse.model_validate(balance)
+    balance_dict = balance.__dict__.copy()
+    balance_dict['tipo'] = controller.convert_tipo_to_long(balance.tipo)
+    balance_response = BalanceResponse.model_validate(balance_dict)
     return {"success": True, "data": balance_response}
 
 
@@ -35,7 +41,9 @@ def get_balance_by_id(balance_id: int, db: Session = Depends(get_db)):
 def create_balance(balance: BalanceCreate, db: Session = Depends(get_db)):
     """Crear nuevo balance"""
     new_balance = controller.create_balance(db, balance)
-    balance_response = BalanceResponse.model_validate(new_balance)
+    balance_dict = new_balance.__dict__.copy()
+    balance_dict['tipo'] = controller.convert_tipo_to_long(new_balance.tipo)
+    balance_response = BalanceResponse.model_validate(balance_dict)
     return {"success": True, "data": balance_response, "message": "Balance creado exitosamente"}
 
 
@@ -48,7 +56,9 @@ def update_balance(balance_id: int, balance: BalanceUpdate, db: Session = Depend
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Balance con ID {balance_id} no encontrado"
         )
-    balance_response = BalanceResponse.model_validate(updated_balance)
+    balance_dict = updated_balance.__dict__.copy()
+    balance_dict['tipo'] = controller.convert_tipo_to_long(updated_balance.tipo)
+    balance_response = BalanceResponse.model_validate(balance_dict)
     return {"success": True, "data": balance_response, "message": "Balance actualizado exitosamente"}
 
 

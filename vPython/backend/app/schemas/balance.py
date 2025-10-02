@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 class BalanceBase(BaseModel):
     """Schema base de Balance"""
-    tipo: str = Field(..., min_length=1, max_length=10)
+    tipo: str = Field(..., min_length=1, max_length=20, description="Tipo de balance: D=Débito, I=Inversión")
     concepto: str = Field(..., min_length=1, max_length=255)
     monto: Decimal = Field(..., gt=0, decimal_places=2)
     deben_ser: Decimal = Field(default=Decimal("0.00"), ge=0, decimal_places=2)
