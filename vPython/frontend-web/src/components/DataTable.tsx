@@ -47,19 +47,19 @@ const DataTable: React.FC<DataTableProps> = ({
   const getIconForColumn = (column: Column) => {
     switch (column.key) {
       case 'monto':
-        return <CurrencyDollarIcon className="h-4 w-4" />;
+        return <CurrencyDollarIcon className="h-3 w-3" />;
       case 'fecha_cargo':
       case 'fecha_pago':
       case 'mes':
-        return <CalendarIcon className="h-4 w-4" />;
+        return <CalendarIcon className="h-3 w-3" />;
       case 'tag':
-        return <TagIcon className="h-4 w-4" />;
+        return <TagIcon className="h-3 w-3" />;
       case 'no_mens':
       case 'total_meses':
       case 'anio':
-        return <HashtagIcon className="h-4 w-4" />;
+        return <HashtagIcon className="h-3 w-3" />;
       default:
-        return <EyeIcon className="h-4 w-4" />;
+        return <EyeIcon className="h-3 w-3" />;
     }
   };
 
@@ -226,7 +226,7 @@ const DataTable: React.FC<DataTableProps> = ({
             disabled={isDeleting}
             className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <TrashIcon className="h-4 w-4 mr-1" />
+            <TrashIcon className="h-3 w-3 mr-1" />
             {isDeleting ? 'Eliminando...' : 'Eliminar Seleccionados'}
           </button>
         </div>
@@ -263,7 +263,7 @@ const DataTable: React.FC<DataTableProps> = ({
                       className="ml-1 hover:bg-green-700 rounded p-1"
                     >
                       <ChevronDownIcon 
-                        className={`h-3 w-3 transition-transform ${
+                        className={`h-2.5 w-2.5 transition-transform ${
                           sortColumn === column.key && sortDirection === 'desc' ? 'rotate-180' : ''
                         }`} 
                       />
@@ -318,7 +318,7 @@ const DataTable: React.FC<DataTableProps> = ({
                         className="text-red-600 hover:text-red-800 disabled:opacity-50 disabled:cursor-not-allowed"
                         title="Eliminar registro"
                       >
-                        <TrashIcon className="h-4 w-4" />
+                        <TrashIcon className="h-3 w-3" />
                       </button>
                     </td>
                   )}
