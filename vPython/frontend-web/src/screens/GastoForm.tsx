@@ -26,7 +26,7 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 const GastoForm: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { state, createGasto, updateGasto, loadGastos } = useApp();
+  const { state, createGasto, updateGasto } = useApp();
   const { loading, error } = state;
 
   const isEdit = Boolean(id);

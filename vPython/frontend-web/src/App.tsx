@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AppProvider } from './contexts/AppContext';
@@ -9,7 +8,6 @@ import GastoForm from './screens/GastoForm';
 import Balance from './screens/Balance';
 import Deudas from './screens/Deudas';
 import Configuracion from './screens/Configuracion';
-import { ROUTES } from './constants';
 
 function App() {
   return (

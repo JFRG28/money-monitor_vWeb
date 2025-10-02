@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: money_monitor_db
+    environment:
+      POSTGRES_DB: money_monitor
+      POSTGRES_USER: money_user
+      POSTGRES_PASSWORD: money_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - money_monitor_network
+    restart: unless-stopped
+
+  # Backend API
+  backend:
+    build:
+      context: ./vPython/backend
+      dockerfile: Dockerfile
+    container_name: money_monitor_backend
+    environment:
+      - DATABASE_URL=postgresql://money_user:money_password@db:5432/money_monitor
+      - SECRET_KEY=your-super-secret-key-change-in-production
+      - ENVIRONMENT=production
+      - HOST=0.0.0.0
+      - PORT=3001
+      - CORS_ORIGINS=["http://localhost:3000", "http://localhost:5173", "http://localhost:5174", "http://localhost:80", "http://localhost"]
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    networks:
+      - money_monitor_network
+    restart: unless-stopped
+    volumes:
+      - ./vPython/backend:/app
+    command: >
+      sh -c "
+        alembic upgrade head &&
+        python run.py
+      "
+
+  # Frontend
+  frontend:
+    build:
+      context: ./vPython/frontend-web
+      dockerfile: Dockerfile
+    container_name: money_monitor_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - money_monitor_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  money_monitor_network:
+    driver: bridge
