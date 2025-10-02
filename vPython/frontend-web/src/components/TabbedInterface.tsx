@@ -64,10 +64,12 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
       
       case 'balance':
         return [
-          { key: 'tipo', label: 'Tipo', width: '100px', align: 'center' as const },
-          { key: 'concepto', label: 'Concepto', width: '200px' },
-          { key: 'monto', label: 'Monto', width: '120px', align: 'right' as const },
-          { key: 'deben_ser', label: 'Deben Ser', width: '120px', align: 'right' as const }
+          { key: 'tipo', label: 'tipo', width: '100px', align: 'center' as const, type: 'text' as const, editable: true },
+          { key: 'concepto', label: 'concepto', width: '200px', type: 'text' as const, editable: true },
+          { key: 'monto', label: 'monto', width: '120px', align: 'right' as const, type: 'currency' as const, editable: true },
+          { key: 'deben_ser', label: 'deben_ser', width: '120px', align: 'right' as const, type: 'currency' as const, editable: true },
+          { key: 'diferencia', label: 'diferencia', width: '120px', align: 'right' as const, type: 'currency' as const, editable: false },
+          { key: 'comentarios', label: 'comentarios', width: '200px', type: 'text' as const, editable: true }
         ];
       
       case 'deuda':
@@ -117,9 +119,11 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
       case 'balance':
         return state.balance.map(item => ({
           ...item,
-          monto: `$${item.monto.toLocaleString()}`,
-          deben_ser: `$${item.deben_ser.toLocaleString()}`,
-          tipo: item.tipo === 'D' ? 'Débito' : 'Crédito'
+          // Mantener los datos en formato original para permitir edición
+          monto: item.monto,
+          deben_ser: item.deben_ser,
+          diferencia: item.diferencia,
+          tipo: item.tipo
         }));
       
       case 'deuda':

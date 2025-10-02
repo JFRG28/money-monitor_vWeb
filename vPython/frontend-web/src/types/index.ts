@@ -76,6 +76,8 @@ export interface BalanceItem {
   concepto: string;
   monto: number;
   deben_ser: number;
+  diferencia: number;
+  comentarios?: string;
   created_at?: Date;
   updated_at?: Date;
 }
