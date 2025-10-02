@@ -15,6 +15,8 @@ class Balance(Base):
     concepto = Column(String, nullable=False)
     monto = Column(Numeric(10, 2), nullable=False)
     deben_ser = Column(Numeric(10, 2), default=0)
+    diferencia = Column(Numeric(10, 2), default=0)  # monto - deben_ser
+    comentarios = Column(String, nullable=True)  # Campo de texto libre
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
