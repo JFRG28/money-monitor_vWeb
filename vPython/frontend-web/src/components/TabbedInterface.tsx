@@ -45,21 +45,21 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
     switch (tabId) {
       case 'unificado_v4':
         return [
-          { key: 'concepto', label: 'Concepto', width: '200px' },
-          { key: 'monto', label: 'Monto', width: '120px', align: 'right' as const },
-          { key: 'tipo_gasto', label: 'Tipo Gasto', width: '120px' },
-          { key: 'forma_pago', label: 'Forma Pago', width: '120px' },
-          { key: 'mes', label: 'Mes', width: '100px' },
-          { key: 'anio', label: 'Año', width: '80px', align: 'center' as const },
-          { key: 'fecha_cargo', label: 'Fecha Cargo', width: '120px' },
-          { key: 'fecha_pago', label: 'Fecha Pago', width: '120px' },
-          { key: 'categoria', label: 'Categoría', width: '100px', align: 'center' as const },
-          { key: 'a_pagos', label: 'A Pagos', width: '100px', align: 'center' as const },
-          { key: 'no_mens', label: 'No Mens', width: '100px', align: 'center' as const },
-          { key: 'total_meses', label: 'Total Meses', width: '120px', align: 'center' as const },
-          { key: 'tag', label: 'Tag', width: '100px' },
-          { key: 'se_divide', label: 'Se Divide', width: '100px', align: 'center' as const },
-          { key: 'gasto_x_mes', label: 'Gasto x Mes', width: '120px' }
+          { key: 'concepto', label: 'concepto', width: '200px', type: 'text' as const, editable: true },
+          { key: 'monto', label: 'monto', width: '120px', align: 'right' as const, type: 'currency' as const, editable: true },
+          { key: 'tipo_gasto', label: 'tipo_gasto', width: '120px', type: 'select' as const, editable: true, options: ['Variable', 'Fijo', 'MSI', 'MCI'] },
+          { key: 'forma_pago', label: 'forma_pago', width: '120px', type: 'text' as const, editable: true },
+          { key: 'mes', label: 'mes', width: '100px', type: 'select' as const, editable: true, options: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] },
+          { key: 'anio', label: 'año', width: '80px', align: 'center' as const, type: 'number' as const, editable: true },
+          { key: 'fecha_cargo', label: 'fecha_cargo', width: '120px', type: 'date' as const, editable: true },
+          { key: 'fecha_pago', label: 'fecha_pago', width: '120px', type: 'date' as const, editable: true },
+          { key: 'categoria', label: 'categoría', width: '100px', align: 'center' as const, type: 'select' as const, editable: true, options: ['E', 'I'] },
+          { key: 'a_pagos', label: 'a_pagos', width: '100px', align: 'center' as const, type: 'boolean' as const, editable: true },
+          { key: 'no_mens', label: 'no_mens', width: '100px', align: 'center' as const, type: 'number' as const, editable: true },
+          { key: 'total_meses', label: 'total_meses', width: '120px', align: 'center' as const, type: 'number' as const, editable: true },
+          { key: 'tag', label: 'tag', width: '100px', type: 'text' as const, editable: true },
+          { key: 'se_divide', label: 'se_divide', width: '100px', align: 'center' as const, type: 'boolean' as const, editable: true },
+          { key: 'gasto_x_mes', label: 'gasto_x_mes', width: '120px', type: 'text' as const, editable: true }
         ];
       
       case 'balance':
@@ -105,12 +105,13 @@ const TabbedInterface: React.FC<TabbedInterfaceProps> = ({ initialTab = 'unifica
       case 'unificado_v4':
         return state.gastos.map(gasto => ({
           ...gasto,
-          monto: `$${gasto.monto.toLocaleString()}`,
-          fecha_cargo: new Date(gasto.fecha_cargo).toLocaleDateString(),
-          fecha_pago: new Date(gasto.fecha_pago).toLocaleDateString(),
-          a_pagos: gasto.a_pagos ? 'Sí' : 'No',
-          se_divide: gasto.se_divide ? 'Sí' : 'No',
-          categoria: gasto.categoria === 'E' ? 'Egreso' : gasto.categoria === 'I' ? 'Ingreso' : gasto.categoria
+          // Mantener los datos en formato original para permitir edición
+          monto: gasto.monto,
+          fecha_cargo: gasto.fecha_cargo,
+          fecha_pago: gasto.fecha_pago,
+          a_pagos: gasto.a_pagos,
+          se_divide: gasto.se_divide,
+          categoria: gasto.categoria
         }));
       
       case 'balance':
